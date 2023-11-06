@@ -82,15 +82,17 @@ fig.update_layout(
 )
 fig.show()
 ```
-#Conerting CSV to SQL
+# Conerting CSV to SQL
 
-** Basic Algorithm Explanation 
+**Basic Algorithm Explanation**
 The algorithm mainly needs only one thing - CSV dataset that will be put in functions below as an argument. Some of them returns SQL statements that are executed.
+
 **get_table_name**(csv_file) <-- returns proper table name (or generate new one almost randomly) that is allowed by sqlite3 documentation.
 
 **create_table**(df_dataset, table_name)<-- creates column names with corresponsing data types and returns SQL statement, for example CREATE TABLE "students" ("school" TEXT, ...);
 
 **drop_table_if_exists**(table_name)<-- returns DROP TABLE IF EXISTS "students";
+
 **insert_into_values**(df_dataset, table_name) <-- returns INSERT INTO "students" VALUES (?,?,?, ...);. Then question marks will be replaced by values in function executemany().
 
 **convert_to_str(df_dataset)** <-- the function converts problematic pandas datatypes like datetime or timedelta to be interpreted by sqlite as strings.
@@ -114,6 +116,7 @@ df_from_csv.head()#Display head of the dataframe
 ```
 df_from_csv.dtypes.unique() #Display unique data types
 ```
+//ggghh
 ```
 def get_table_name(csv_file):
 #Create a table name from CSV file name and convert it to be table name allowed by slite3 documentation.
