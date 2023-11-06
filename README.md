@@ -1,4 +1,4 @@
-)# Craigslist-Analysis
+# Craigslist-Analysis
 Before diving into the analysis we first load the necessary libraries;
 
 ```
@@ -82,7 +82,7 @@ fig.update_layout(
 )
 fig.show()
 ```
-# Conerting CSV to SQL
+#Conerting CSV to SQL
 
 ** Basic Algorithm Explanation 
 The algorithm mainly needs only one thing - CSV dataset that will be put in functions below as an argument. Some of them returns SQL statements that are executed.
