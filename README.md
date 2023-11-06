@@ -99,12 +99,13 @@ The algorithm mainly needs only one thing - CSV dataset that will be put in func
 
 **executemany**(df_dataset, table_name)<-- executes insert_into_values() function.
 
+To load column names and their data types and to generate random table name if necessary
 ```
 import sqlite3
 import csv
 import re
-import pandas as pd # to load column names and their data types
-import random, string # to generate random table name if necessary
+import pandas as pd 
+import random, string 
 ```
 ```
 csv_file = '/kaggle/input/craigslist-vehicles/craigslist_vehicles.csv'#Loading the dataset
@@ -116,15 +117,15 @@ df_from_csv.head()#Display head of the dataframe
 ```
 df_from_csv.dtypes.unique() #Display unique data types
 ```
-//ggghh
+Create a table name from CSV file name and convert it to be table name allowed by slite3 documentation.
 ```
 def get_table_name(csv_file):
-#Create a table name from CSV file name and convert it to be table name allowed by slite3 documentation.
-    # when in CSV file name there are letters too
+
+# when in CSV file name there are letters too
     regex = re.compile('[^a-z]')
     table_name = csv_file.split("/")[-1].split(".")[0]
     table_name = regex.sub('', table_name)
-    # when in CSV file name there aren't any letters
+# when in CSV file name there aren't any letters
     if table_name == '':
         for i in range(10):
             table_name += random.choice(string.ascii_lowercase)
@@ -133,9 +134,9 @@ generated_table_name = get_table_name(csv_file)
 generated_table_name
 ```
 Instead of entering each column name with correspondent data type in each SQL STATEMENTS, we define functions making these statements quickly.
+The function returns SQL statement "CREATE TABLE" with needed table name and its column names along with data types which these columns will store.
 ```
 def create_table(df_dataset, table_name):
-#The function returns SQL statement "CREATE TABLE" with needed table name and its column names along with data types which these columns will store.
 
     cols_with_sql_types = []
     for col_name, col_type in df_dataset.dtypes.items():
@@ -148,9 +149,9 @@ def create_table(df_dataset, table_name):
     final = str(cols_with_sql_types).replace("'", "").replace(']', '').replace('[', '')
     return f'CREATE TABLE "{table_name}" ({final})'
 ```
+The function returns SQL statement "DROP TABLE IF EXISTS" with needed table name.
 ```
 def drop_table_if_exists(table_name):
-#The function returns SQL statement "DROP TABLE IF EXISTS" with needed table name.
    
     return f'DROP TABLE IF EXISTS {table_name}'
 ```
